@@ -30,8 +30,8 @@ base_admin = extra_base + [admin.ModelAdmin]
 base_user_admin = extra_base + [BaseUserAdmin]
 
 # unregister User mode if it is already registered
-if admin.site.is_registered(User):  # pragma: no branch
-    admin.site.unregister(User)
+# if admin.site.is_registered(User):  # pragma: no branch
+#     admin.site.unregister(User)
 
 
 class MicrosoftAccountAdmin(*base_admin):
@@ -81,14 +81,14 @@ def _get_inlines():
     return inlines
 
 
-@admin.register(User)
-class UserAdmin(*base_user_admin):
-    @property
-    def inlines(self):
-        """Adds MicrosoftAccount and/or XboxLiveAccount foreign keys to
-        User model"""
+# @admin.register(User)
+# class UserAdmin(*base_user_admin):
+#     @property
+#     def inlines(self):
+#         """Adds MicrosoftAccount and/or XboxLiveAccount foreign keys to
+#         User model"""
 
-        return _get_inlines()
+#         return _get_inlines()
 
 
 _register_admins()
