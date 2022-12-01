@@ -45,6 +45,7 @@ class MicrosoftAuthenticationBackend(ModelBackend):
             # validate permission scopes
             if "access_token" in token and self.microsoft.valid_scopes(token["scope"]):
                 user = self._authenticate_user()
+                request.session['user'] = token
 
         if user is not None:
             self._call_hook(user)
