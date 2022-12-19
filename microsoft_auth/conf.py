@@ -76,6 +76,11 @@ DEFAULT_CONFIG = {
             ),
             str,
         ),
+        "MICROSOFT_AUTH_AUDIENCE": (
+            "",
+            _(""),
+            str,
+        ),
         "MICROSOFT_AUTH_EXTRA_SCOPES": (
             "",
             _(
