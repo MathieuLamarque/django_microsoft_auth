@@ -41,7 +41,6 @@ class MicrosoftAuthenticationBackend(ModelBackend):
         if code is not None:
             # fetch OAuth token
             token = self.microsoft.fetch_token(code=code)
-            print(token)
 
             # validate permission scopes
             if "access_token" in token and self.microsoft.valid_scopes(token["scope"]):
