@@ -126,7 +126,7 @@ class MicrosoftClient(OAuth2Session):
         if self.token is None:
             return None
 
-        token = self.token["id_token"].encode("utf8")
+        token = self.token["access_token"].encode("utf8")
 
         kid = jwt.get_unverified_header(token)["kid"]
         jwk = None
@@ -139,14 +139,14 @@ class MicrosoftClient(OAuth2Session):
         if jwk is None:
             if allow_refresh:
                 logger.warn(
-                    "could not find public key for id_token, " "refreshing OIDC config"
+                    "could not find public key for access_token, " "refreshing OIDC config"
                 )
                 cache.delete(CACHE_KEY_JWKS)
                 cache.delete(CACHE_KEY_OPENID)
 
                 return self.get_claims(allow_refresh=False)
             else:
-                logger.warn("could not find public key for id_token")
+                logger.warn("could not find public key for access_token")
                 return None
 
         public_key = RSAAlgorithm.from_jwk(json.dumps(jwk))
@@ -156,10 +156,10 @@ class MicrosoftClient(OAuth2Session):
                 token,
                 public_key,
                 algorithms=["RS256"],
-                audience=self.config.MICROSOFT_AUTH_CLIENT_ID,
+                audience=self.config.MICROSOFT_AUTH_AUDIENCE,
             )
         except jwt.PyJWTError as e:
-            logger.warn("could not verify id_token sig: {}".format(e))
+            logger.warn("could not verify access_token sig: {}".format(e))
             return None
 
         return claims
