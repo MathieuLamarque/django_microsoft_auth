@@ -170,7 +170,7 @@ class MicrosoftAuthenticationBackend(ModelBackend):
             except User.DoesNotExist:
                 user = User(
                     oid=data["oid"],
-                    username=data["preferred_username"][:150],
+                    username=data["email"][:150],
                     first_name=first_name,
                     last_name=last_name,
                     email=data["email"],
